@@ -35,9 +35,14 @@ var updateJokesMenu = function () {
 // Update the displayed joke, based on the requested joke
 var requestedJokeInput = document.getElementById('requested-joke')
 var jokeBox = document.getElementById('joke-box')
+
 var updateDisplayedJoke = function () {
-  var requestedJokeKey = requestedJokeInput.value
-  jokeBox.textContent = requestedJokeKey
+  if ((requestedJokeInput.value !== null) && (requestedJokeInput.value !== '')) {
+    var requestedJokeKey = requestedJokeInput.value
+    jokeBox.textContent = jokes[requestedJokeKey].setup || noJokesMessage
+  } else {
+    jokeBox.textContent = 'Please type in the input'
+  }
 }
 
 // Function to keep track of all other
