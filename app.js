@@ -1,7 +1,12 @@
-// ----
-// DATA
-// ----
-
+// declare vaiables and extract items by selectors
+var newJokeKey = document.getElementById('new-joke-key')
+var newJokeSetup = document.getElementById('new-joke-setup')
+var newJokePunchline = document.getElementById('new-joke-punchline')
+var addNewJoke = document.getElementById('save-button')
+var deleteJokeKey = document.getElementById('delete-joke-key').value
+var deleteThisJoke = document.getElementById('delete-button')
+var jokeSavedNotice = document.getElementById('notice-box')
+var addJokeAtIndex = 0
 // A couple jokes to start with
 var jokes = {
   'the horse': {
@@ -14,19 +19,15 @@ var jokes = {
   }
 }
 
+// create array to store keys in it
+var arrayOfJokes = ['the horse', 'Orion\'s pants']
+
 // The message to display if the jokes object is empty
 var noJokesMessage = 'I... I don\'t know any jokes. 😢'
-
-// -------------
-// PAGE UPDATERS
-// -------------
 
 // Update the listed jokes, based on the jokes object
 var jokesMenuList = document.getElementById('jokes-menu')
 var updateJokesMenu = function () {
-  // Don't worry too much about this code for now.
-  // You'll learn how to do advanced stuff like
-  // this in a later lesson.
   var jokeKeys = Object.keys(jokes)
   var jokeKeyListItems = jokeKeys.join('</li><li>') || noJokesMessage
   jokesMenuList.innerHTML = '<li>' + jokeKeyListItems + '</li>'
@@ -36,29 +37,43 @@ var updateJokesMenu = function () {
 var requestedJokeInput = document.getElementById('requested-joke')
 var jokeBox = document.getElementById('joke-box')
 
+// function to check existing joke and display
 var updateDisplayedJoke = function () {
   if ((requestedJokeInput.value !== null) && (requestedJokeInput.value !== '')) {
-    var requestedJokeKey = requestedJokeInput.value
-    jokeBox.textContent = jokes[requestedJokeKey].setup || noJokesMessage
+    var i
+    for (i = 0; i < arrayOfJokes.length; i++) {
+      if (arrayOfJokes[i] === requestedJokeInput.value) {
+        var requestedJokeKey = requestedJokeInput.value
+        jokeBox.textContent = (jokes[requestedJokeKey].setup + '\n' + jokes[requestedJokeKey].punchline) || (noJokesMessage)
+      }
+    }
   } else {
-    jokeBox.textContent = 'Please type in the input'
+    jokeBox.textContent = 'No matching jokes found.'
   }
 }
 
-// Function to keep track of all other
-// page update functions, so that we
-// can call them all at once
+// Function to keep track of all page updates to  call them all at once
 var updatePage = function () {
   updateJokesMenu()
   updateDisplayedJoke()
 }
 
-// -------
-// STARTUP
-// -------
-
 // Update the page immediately on startup
 updatePage()
+
+// add new joke object to jokes object/struct
+var saveNewJoke = function () {
+  // create new joke object inside jokes
+  jokes[newJokeKey.value] = {
+    'setup': '',
+    'punchline': ''
+  }
+  // assign values to each attributes of th joke object
+  jokes[newJokeKey.value].setup = newJokeSetup.value
+  jokes[newJokeKey.value].punchline = newJokePunchline.value
+  arrayOfJokes[addJokeAtIndex + arrayOfJokes.length] = newJokeKey.value
+  jokeSavedNotice.textContent = 'Joke Saved.'
+}
 
 // ---------------
 // EVENT LISTENERS
@@ -66,3 +81,4 @@ updatePage()
 
 // Keep the requested joke up-to-date
 requestedJokeInput.addEventListener('input', updateDisplayedJoke)
+addNewJoke.addEventListener('click', saveNewJoke)
