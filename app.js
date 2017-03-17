@@ -3,9 +3,10 @@ var newJokeKey = document.getElementById('new-joke-key')
 var newJokeSetup = document.getElementById('new-joke-setup')
 var newJokePunchline = document.getElementById('new-joke-punchline')
 var addNewJoke = document.getElementById('save-button')
-var deleteJokeKey = document.getElementById('delete-joke-key').value
+var deleteJokeKey = document.getElementById('delete-joke-key')
 var deleteThisJoke = document.getElementById('delete-button')
 var jokeSavedNotice = document.getElementById('notice-box')
+var jokeDeletedNotice = document.getElementById('delete-notice')
 var addJokeAtIndex = 0
 // A couple jokes to start with
 var jokes = {
@@ -79,12 +80,28 @@ var saveNewJoke = function () {
 
   // update jokes menu again
   updateJokesMenu()
-
-  // save updated version of jokes in the localstorage
-  // var stringifiedJokes = JSON.stringify(jokes)
-  // window.localStorage.setItem('jokes', stringifiedJokes)
 }
+
+// Delete unwanted jokes
+var deleteJokeObject = function () {
+  var deleteJokeKeyValue = deleteJokeKey.value
+  delete jokes[deleteJokeKeyValue]
+  var indexDeleteKey = arrayOfJokes.indexOf(deleteJokeKeyValue)
+
+  if (indexDeleteKey !== -1) {
+    arrayOfJokes.splice(indexDeleteKey, 1)
+  }
+  jokeDeletedNotice.textContent = 'Joke has been deleted.'
+
+  // update the menu list
+  updateJokesMenu()
+}
+
+// save updated version of jokes in the localstorage
+// var stringifiedJokes = JSON.stringify(jokes)
+// window.localStorage.setItem('jokes', stringifiedJokes)
 
 // Keep the requested joke up-to-date with event listeners
 requestedJokeInput.addEventListener('input', updateDisplayedJoke)
 addNewJoke.addEventListener('click', saveNewJoke)
+deleteThisJoke.addEventListener('click', deleteJokeObject)
