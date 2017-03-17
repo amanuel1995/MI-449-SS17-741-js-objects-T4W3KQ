@@ -73,6 +73,10 @@ var saveNewJoke = function () {
   jokes[newJokeKey.value].punchline = newJokePunchline.value
   arrayOfJokes[addJokeAtIndex + arrayOfJokes.length] = newJokeKey.value
   jokeSavedNotice.textContent = 'Joke Saved.'
+
+  // save updated version of jokes in the localstorage
+  var stringifiedJokes = JSON.stringify(jokes)
+  window.localStorage.setItem('jokes', stringifiedJokes)
 }
 
 // ---------------

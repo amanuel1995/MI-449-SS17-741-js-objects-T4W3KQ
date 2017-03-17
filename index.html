@@ -30,30 +30,33 @@
           <h2>Teach me a new joke 🤓</h2>
 
           <label>The joke is about:</label>
-          <input type="text" class="u-full-width">
+          <input id="new-joke-key" type="text" class="u-full-width">
 
           <label>The setup is:</label>
-          <textarea class="u-full-width"></textarea>
+          <textarea id="new-joke-setup" class="u-full-width"></textarea>
 
           <label>The punchline is:</label>
-          <textarea class="u-full-width"></textarea>
+          <textarea id="new-joke-punchline" class="u-full-width"></textarea>
 
-          <button class="u-full-width">
+          <button id="save-button" class="u-full-width">
             Remember this joke!
           </button>
+          <div id="notice-box"></div>
         </div>
         <div class="six columns">
           <h2>Erase my memory 😢</h2>
 
           <label>I don't like the joke about:</label>
-          <input type="text" class="u-full-width">
+          <input id="delete-joke-key" type="text" class="u-full-width">
 
-          <button class="u-full-width">
+          <button id="delete-button" class="u-full-width">
             Forget about it!
           </button>
         </div>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
