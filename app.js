@@ -60,6 +60,8 @@ var updatePage = function () {
 
 // Update the page immediately on startup
 updatePage()
+// var stringifiedJokes = window.localStorage.getItem('jokes')
+// jokes = JSON.parse(stringifiedJokes)
 
 // add new joke object to jokes object/struct
 var saveNewJoke = function () {
@@ -68,21 +70,21 @@ var saveNewJoke = function () {
     'setup': '',
     'punchline': ''
   }
+
   // assign values to each attributes of th joke object
   jokes[newJokeKey.value].setup = newJokeSetup.value
   jokes[newJokeKey.value].punchline = newJokePunchline.value
   arrayOfJokes[addJokeAtIndex + arrayOfJokes.length] = newJokeKey.value
   jokeSavedNotice.textContent = 'Joke Saved.'
 
+  // update jokes menu again
+  updateJokesMenu()
+
   // save updated version of jokes in the localstorage
-  var stringifiedJokes = JSON.stringify(jokes)
-  window.localStorage.setItem('jokes', stringifiedJokes)
+  // var stringifiedJokes = JSON.stringify(jokes)
+  // window.localStorage.setItem('jokes', stringifiedJokes)
 }
 
-// ---------------
-// EVENT LISTENERS
-// ---------------
-
-// Keep the requested joke up-to-date
+// Keep the requested joke up-to-date with event listeners
 requestedJokeInput.addEventListener('input', updateDisplayedJoke)
 addNewJoke.addEventListener('click', saveNewJoke)
