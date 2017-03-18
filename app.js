@@ -5,9 +5,10 @@ var newJokePunchline = document.getElementById('new-joke-punchline')
 var addNewJoke = document.getElementById('save-button')
 var deleteJokeKey = document.getElementById('delete-joke-key')
 var deleteThisJoke = document.getElementById('delete-button')
-var jokeSavedNotice = document.getElementById('notice-box')
+var jokeSavedNotice = document.getElementById('saved-notice')
 var jokeDeletedNotice = document.getElementById('delete-notice')
 var addJokeAtIndex = 0
+
 // A couple jokes to start with
 var jokes = {
   'the horse': {
@@ -45,7 +46,11 @@ var updateDisplayedJoke = function () {
     for (i = 0; i < arrayOfJokes.length; i++) {
       if (arrayOfJokes[i] === requestedJokeInput.value) {
         var requestedJokeKey = requestedJokeInput.value
-        jokeBox.textContent = (jokes[requestedJokeKey].setup + '\n' + jokes[requestedJokeKey].punchline) || (noJokesMessage)
+        var setup = '<p>' + (jokes[requestedJokeKey].setup) + '</p>'
+        var punchline = '<p>' + (jokes[requestedJokeKey].punchline) + '</p>'
+
+        // update joke box with two paragraphs
+        jokeBox.innerHTML = setup + punchline
       }
     }
   } else {
@@ -61,6 +66,7 @@ var updatePage = function () {
 
 // Update the page immediately on startup
 updatePage()
+
 // var stringifiedJokes = window.localStorage.getItem('jokes')
 // jokes = JSON.parse(stringifiedJokes)
 
@@ -78,23 +84,29 @@ var saveNewJoke = function () {
   arrayOfJokes[addJokeAtIndex + arrayOfJokes.length] = newJokeKey.value
   jokeSavedNotice.textContent = 'Joke Saved.'
 
-  // update jokes menu again
+  // update jokes menu to include new joke
   updateJokesMenu()
 }
 
 // Delete unwanted jokes
 var deleteJokeObject = function () {
   var deleteJokeKeyValue = deleteJokeKey.value
-  delete jokes[deleteJokeKeyValue]
-  var indexDeleteKey = arrayOfJokes.indexOf(deleteJokeKeyValue)
+  var j
+  for (j = 0; j < arrayOfJokes.length; j++) {
+    if (arrayOfJokes[j] === deleteJokeKeyValue) {
+      delete jokes[deleteJokeKeyValue]
+      var indexDeleteKey = arrayOfJokes.indexOf(deleteJokeKeyValue)
+      if (indexDeleteKey !== -1) {
+        arrayOfJokes.splice(indexDeleteKey, 1)
+      }
+      jokeDeletedNotice.textContent = 'Joke has been deleted.'
 
-  if (indexDeleteKey !== -1) {
-    arrayOfJokes.splice(indexDeleteKey, 1)
+      // update the menu list
+      updateJokesMenu()
+    } else {
+      jokeDeletedNotice.innerHTML = 'That joke didn\'t exist.'
+    }
   }
-  jokeDeletedNotice.textContent = 'Joke has been deleted.'
-
-  // update the menu list
-  updateJokesMenu()
 }
 
 // save updated version of jokes in the localstorage
