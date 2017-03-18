@@ -10,3 +10,13 @@ h1 {
 #joke-box p:last-child {
   margin-bottom: 0;
 }
+
+#saved-notice {
+  padding: 20px;
+  background-color: #f9f7f5;
+}
+
+#delete-notice {
+  padding: 20px;
+  background-color: #f9f7f5;
+}
